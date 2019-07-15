@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import QuizesList from "./components/QuizesList";
+import Quiz from "./components/Quiz";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+  state = {
+    quiz: "",
+    inProgress: false
+  };
+
+  render() {
+    const setQuiz = e => {
+      this.setState({ quiz: [e.target.name], inProgress: true });
+    };
+    const resetState = e => {
+      this.setState({ quiz: "", inProgress: false });
+    };
+    const logState = e => {
+      console.log(this.state.quiz);
+    };
+    return (
+      <div className="app">
+        {this.state.inProgress ? (
+          <Quiz
+            resetState={resetState}
+            logState={logState}
+            state={this.state}
+          />
+        ) : (
+          <QuizesList setQuiz={setQuiz} />
+        )}
+      </div>
+    );
+  }
 }
-
-export default App;
